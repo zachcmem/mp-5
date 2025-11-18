@@ -38,6 +38,7 @@ export default function MainDiv(){
     const [longURL, setLongURL] = useState("");
     const [alias, setAlias] = useState("");
     const [newURL, setNewURL] = useState("");
+    const [error, setError] = useState("");
 
         //handleClick, which sends to uRL shortener (hopefully)
     async function handleClick(){
@@ -88,6 +89,16 @@ export default function MainDiv(){
             <InputLink type="text" id="alias" name="alias" value={alias} onChange={(e: ChangeEvent<HTMLInputElement>)=> setAlias(e.target.value)}/>
             <br/>
             <ButtonLink type="button" onClick={handleClick}>GET SHORTENED URL</ButtonLink>
+            
+            {/* ERROR MESSAGE FOR ALIAS TAKEN */}
+             {error && (
+            <p style={{ color: "#EEEEEE", marginTop: "20px", fontFamily: "Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace", fontWeight: "bold"}}>
+                {error}
+            </p>
+            )}
+            
+            
+            {/* SHOW NEW URL */}
             {newURL ?(
             <p style={{ color: "#EEEEEE", marginTop: "20px", fontFamily: "Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace", fontWeight: "bold"}}>Shortend URL:
             <a href={newURL} style={{color: "#EEEEEE"}}>{newURL}</a>
