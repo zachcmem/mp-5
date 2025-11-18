@@ -7,6 +7,10 @@ import { InputLink } from "./InputLink";
 import { ButtonLink } from "./ButtonLink";
 import {useState} from "react";
 
+// import for "Parameter 'e' implicitly has an 'any' type." error
+import type { ChangeEvent } from "react";
+
+
 const MainWrapper = styled.div`
     text-align: center;
     border: 5px solid;
@@ -60,10 +64,10 @@ export default function MainDiv(){
         <MainWrapper>
             <Title>CREATE A SHARABLE LINK</Title>
             <LinkLabel>LONG WEBSITE LINK:: </LinkLabel>
-            <InputLink type="text" id="longlink" name="longlink" value={longURL} onChange={(e)=> setLongURL(e.target.value)}/>
+            <InputLink type="text" id="longlink" name="longlink" value={longURL} onChange={(e: ChangeEvent<HTMLInputElement>)=> setLongURL(e.target.value)}/>
             <br/>
             <LinkLabel>ALIAS::        </LinkLabel>
-            <InputLink type="text" id="alias" name="alias" value={alias} onChange={(e)=> setAlias(e.target.value)}/>
+            <InputLink type="text" id="alias" name="alias" value={alias} onChange={(e: ChangeEvent<HTMLInputElement>)=> setAlias(e.target.value)}/>
             <br/>
             <ButtonLink type="button" onClick={handleClick}>GET SHORTENED URL</ButtonLink>
             {newURL ?(
