@@ -15,19 +15,15 @@ function checkURL(url : string): boolean{ //take longURL as URL
     } catch{
         return false;
     }
-    
-
 }
     
-
 
 export async function POST(request: Request){
     // grabs longURL and alias
     //error catching for vercel "Failed to load resource: the server responded with a status of 500 ()" error
     try{
-        const needed = await request.json();
-        console.log("LONGURL,ALIAS", needed);
-        const{longURL, alias} = needed;
+        // pass into varibles
+        const{longURL, alias} = await request.json();
 
         // first, check if theres a valid URL
         if(!checkURL(longURL)){
@@ -37,21 +33,11 @@ export async function POST(request: Request){
             )
         }
 
-
         // I had to look up how to get this code, but this should
         // return the websites URL, for concatenation
-
-        if(!alias || alias.trim() === ""){
-            return NextResponse.json(
-                {error: "Alias cannot be empty."},
-                {status: 400}
-            )
-        }
-
         //https://medium.com/@sarfarazahmed1012/how-to-easily-get-the-base-url-in-react-or-next-js-9c49c7ccb883
         const webURL = process.env.WEBSITE_URL!;
         console.log("WEB URL", webURL);
-
 
         //calls getShortURL function for longURL, alias
         const returned = await getShortURL(longURL, alias); 
@@ -62,7 +48,6 @@ export async function POST(request: Request){
         return NextResponse.json({shortendURL})
 
     } catch (err:any){
-        console.error("error in post:", err)
 
         return NextResponse.json(
             {error: err?.message ?? "error"},

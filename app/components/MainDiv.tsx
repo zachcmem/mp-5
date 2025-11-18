@@ -40,20 +40,11 @@ export default function MainDiv(){
     const [newURL, setNewURL] = useState("");
     const [error, setError] = useState("");
 
-        //handleClick, which sends to uRL shortener (hopefully)
+    //handleClick, which sends to uRL shortener (hopefully)
     async function handleClick(){
         //remove when done
         setError("");
         setNewURL("");
-        
-        if(!alias.trim()){
-            setError("Alias cannot be empty");
-            return;
-        }
-
-        console.log("LongURL", longURL);
-        console.log("Alias", alias);
-
 
         //this took me way to long
         const res = await fetch("/api/shortenURL", {
@@ -71,6 +62,7 @@ export default function MainDiv(){
         const data = await res.json();
         console.log("API response", data);
 
+        //error handle for edge cases
         if(!res.ok){
             if(data.error === "Alias Taken"){
                 setError("Choose Another Alias")
@@ -80,7 +72,6 @@ export default function MainDiv(){
             }
             return;
         }
-
 
         //makes the URL show on screen
         setNewURL(data.shortendURL)

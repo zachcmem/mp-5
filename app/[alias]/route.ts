@@ -1,20 +1,23 @@
-// from directions, could be useful?
 
+// use redirect to redirect user to webpage through website
 import { redirect } from "next/navigation";
 import getCollection from "@/db";
 
-// my vercel wasnt building, and I searched up the error 
-// and it pointed to possibly being something wrong with
-// the request in the git command
-
-export async function GET(request: Request, 
+// get function used to get data from mongodb
+export async function GET(
+    // define for using paramas
     context: {params:Promise<{alias: string}>
 }){
+    // get what the alias is
     const {alias}= await context.params;
+    // gets urls from mongo db
     const url = await getCollection("urls");
+    // find alias match
     const new_url = await url.findOne({alias});
+    // database error for null case
     if(!new_url){
         throw new Error("URL does not exist")
     }
+    //redirect from instructions
     redirect(new_url.longURL)
 }
