@@ -71,7 +71,7 @@ export default function MainDiv(){
         const data = await res.json();
         console.log("API response", data);
 
-        if(!res){
+        if(!res.ok){
             if(data.error === "Alias Taken"){
                 setError("Choose Another Alias")
             }
