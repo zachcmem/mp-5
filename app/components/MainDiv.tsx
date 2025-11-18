@@ -42,25 +42,40 @@ export default function MainDiv(){
         //handleClick, which sends to uRL shortener (hopefully)
     async function handleClick(){
         //remove when done
-        console.log("LongURL", longURL);
-        console.log("Alias", alias);
+        try{
+            console.log("LongURL", longURL);
+            console.log("Alias", alias);
 
 
-        //this took me way to long
-        const res = await fetch("/api/shortenURL", {
-            method: "POST",
-            body: JSON.stringify({
-                longURL, alias
-            })
-        });
+            //this took me way to long
+            const res = await fetch("/api/shortenURL", {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                },
+                body: JSON.stringify({
+                    longURL, alias
+                })
+            });
+
+            if(!res){
+                console.error("ERROR HERE MAINDIV61");
+                return;
+            }
 
 
-        //passes data from json to variable
-        const data = await res.json();
+            //passes data from json to variable
+            const data = await res.json();
+            console.log("API response", data);
 
 
-        //makes the URL show on screen
-        setNewURL(data.shortendURL)
+            //makes the URL show on screen
+            setNewURL(data.shortendURL)
+        }
+        catch(err){
+            console.error("Network / JSON parse", err)
+        }
+        
     }
     
     return(
