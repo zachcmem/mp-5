@@ -5,6 +5,7 @@ import getCollection from "@/db";
 
 // get function used to get data from mongodb
 export async function GET(
+    request: Request,
     // define for using paramas
     context: {params:Promise<{alias: string}>
 }){
