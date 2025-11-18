@@ -17,6 +17,13 @@ export async function POST(request: Request){
         // I had to look up how to get this code, but this should
         // return the websites URL, for concatenation
 
+        if(!alias || alias.trim() === ""){
+            return NextResponse.json(
+                {error: "Alias cannot be empty."},
+                {status: 400}
+            )
+        }
+
         //https://medium.com/@sarfarazahmed1012/how-to-easily-get-the-base-url-in-react-or-next-js-9c49c7ccb883
         const webURL = process.env.WEBSITE_URL!;
         console.log("WEB URL", webURL);
@@ -25,12 +32,14 @@ export async function POST(request: Request){
         //calls getShortURL function for longURL, alias
         const returned = await getShortURL(longURL, alias); 
         console.log("getshortenedurl", returned);
-        const shortendURL = `${webURL}/${returned.alias}`;
 
+        const shortendURL = `${webURL}/${returned.alias}`;
         // returns response. try JSON.stringify
         return NextResponse.json({shortendURL})
+
     } catch (err:any){
         console.error("error in post:", err)
+        
         return NextResponse.json(
             {error: err?.message ?? "error"},
             {status : 500}

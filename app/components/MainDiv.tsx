@@ -45,11 +45,12 @@ export default function MainDiv(){
         //remove when done
         setError("");
         setNewURL("");
-
-        if(!alias){
-            setError("Alias Cannot Be Empty");
-        }
         
+        if(!alias.trim()){
+            setError("Alias cannot be empty");
+            return;
+        }
+
         console.log("LongURL", longURL);
         console.log("Alias", alias);
 
