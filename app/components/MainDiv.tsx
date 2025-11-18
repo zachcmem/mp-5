@@ -71,11 +71,16 @@ export default function MainDiv(){
         const data = await res.json();
         console.log("API response", data);
 
+        if(!res){
+            if(data.error === "Alias Taken"){
+                setError("Choose Another Alias")
+            }
+            return;
+        }
+
 
         //makes the URL show on screen
         setNewURL(data.shortendURL)
-        
-       
         
     }
     

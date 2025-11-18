@@ -12,7 +12,7 @@ export async function getShortURL(longURL: string, alias: string){
     // first, check to see if alias is taken
     const takenURL = await urls.findOne({alias});
     if(takenURL){
-        throw new Error("ALIAS_TAKEN")
+        throw new Error("Alias Taken")
     }
 
     // 2: insert into database
