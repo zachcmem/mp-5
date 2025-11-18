@@ -9,8 +9,13 @@ import { NextResponse} from "next/server"; //searched up error, says it could be
 //URL constructor per piazza @130
 // source for syntax https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
 function checkURL(url : string): boolean{ //take longURL as URL
-    const urlCheck = new URL(url); //create using URL constructor class
+    try{
+        const urlCheck = new URL(url); //create using URL constructor class
     return urlCheck.protocol === "http:" || urlCheck.protocol === "https:";
+    } catch{
+        return false;
+    }
+    
 
 }
     
@@ -61,7 +66,7 @@ export async function POST(request: Request){
 
         return NextResponse.json(
             {error: err?.message ?? "error"},
-            {status : 500}
+            {status : 400}
         );
 
     }

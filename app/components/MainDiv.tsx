@@ -75,6 +75,9 @@ export default function MainDiv(){
             if(data.error === "Alias Taken"){
                 setError("Choose Another Alias")
             }
+            else if(data.error === "URL NOT VALID"){
+                setError("URL is not valid")
+            }
             return;
         }
 
