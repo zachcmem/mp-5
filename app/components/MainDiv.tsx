@@ -39,11 +39,12 @@ export default function MainDiv(){
     const [alias, setAlias] = useState("");
     const [newURL, setNewURL] = useState("");
 
-    //handleClick, which sends to uRL shortener (hopefully)
+        //handleClick, which sends to uRL shortener (hopefully)
     async function handleClick(){
         //remove when done
         console.log("LongURL", longURL);
         console.log("Alias", alias);
+
 
         //this took me way to long
         const res = await fetch("/api/shortenURL", {
@@ -53,8 +54,10 @@ export default function MainDiv(){
             })
         });
 
+
         //passes data from json to variable
         const data = await res.json();
+
 
         //makes the URL show on screen
         setNewURL(data.shortendURL)
