@@ -6,6 +6,16 @@
 import { getShortURL} from "@/app/getShortURL";
 import { NextResponse} from "next/server"; //searched up error, says it could be due to my Response Packasge
 
+//URL constructor per piazza @130
+// source for syntax https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+function checkURL(url : string): boolean{ //take longURL as URL
+    const urlCheck = new URL(url); //create using URL constructor class
+    return urlCheck.protocol === "http:" || urlCheck.protocol === "https:";
+
+}
+    
+
+
 export async function POST(request: Request){
     // grabs longURL and alias
     //error catching for vercel "Failed to load resource: the server responded with a status of 500 ()" error
@@ -13,6 +23,15 @@ export async function POST(request: Request){
         const needed = await request.json();
         console.log("LONGURL,ALIAS", needed);
         const{longURL, alias} = needed;
+
+        // first, check if theres a valid URL
+        if(!checkURL(longURL)){
+            return NextResponse.json(
+                {error: "URL NOT VALID"},
+                {status: 400}
+            )
+        }
+
 
         // I had to look up how to get this code, but this should
         // return the websites URL, for concatenation
@@ -39,7 +58,7 @@ export async function POST(request: Request){
 
     } catch (err:any){
         console.error("error in post:", err)
-        
+
         return NextResponse.json(
             {error: err?.message ?? "error"},
             {status : 500}
